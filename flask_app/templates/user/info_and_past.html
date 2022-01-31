@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/info_prev_style.css">
+</head>
+<body>
+    <div id="page_top">
+        <h1 id="page_title" style="font: bolder;">PIZZA PETE'S</h1>
+        <div class="navbar">
+            <a class="navbar-button" href="/dashboard">HOME</a>
+            <a class="navbar-button" href="/order">ORDER ({{ user.order }})</a>
+            <a class="navbar-button" href="/logout">LOGOUT</a>
+        </div>
+    </div>
+    <div class="main_body">
+        <div id="account_info">
+            <h1 class="section-title">Account Info</h1>
+            <form id="account_info_form" action="/account_info_process">
+                
+                <label for="first_name" class="form_titles">First Name</label>
+                <input class="form_item" type="text"><br><br>
+
+                <label for="last_name" class="form_titles">Last Name</label>
+                <input class="form_item" type="text"><br><br>
+                
+                <label for="email" class="form_titles">Email</label>
+                <input class="form_item" type="email"><br><br>
+                
+                <label for="address" class="form_titles">Address</label>
+                <input class="form_item" type="text"><br><br>
+                
+                <label for="city" class="form_titles_extra">City</label>
+                <input id="form_city" type="text">
+                
+                <label for="state" class="form_titles_extra">State</label>
+                <select name="state" id="form_state">
+                    <option value="idaho">ID</option>
+                    <option value="washington">WA</option>
+                    <option value="california">CA</option>
+                    <option value="oregon">OR</option>
+                </select>
+                <br><br>
+                <input class="form_submit" type="submit" value="UPDATE">
+            </form>
+        </div>
+        <div id="past_orders">
+            <h1 class="section_title">Past Orders</h1>
+            {% if user.order == 0: %}
+                <div class="past_order">
+                    {{ order.date }}
+                    {% if order.favorite == 0: %}
+                        <input id="favorite" type="checkbox" checked>
+                    {% else: %}
+                        <input id="favorite" type="checkbox">
+                    {% endif %}
+                    <br>
+                    {{user.order}}
+                </div>
+            % endif %
+        </div>
+    </div>
+</body>
+</html>
