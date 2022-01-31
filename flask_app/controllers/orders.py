@@ -7,7 +7,15 @@ from datetime import *
 
 import socket
 
+methods_JSON=[{'name': 'Carry Out'}, {'name': 'Delivery'}]
+size_JSON=[{'size': 'Small'}, {'size': 'Medium'}, {'size': 'Large'}, {'size': 'X-Large'}]
+crust_JSON=[{'crust': 'Thin Crust'}, {'crust': 'Hand Tossed'}, {'crust': 'Stuffed crust'}]
+quantity_JSON=[{'qty': 1}, {'qty': 2}, {'qty': 3}, {'qty': 4}, {'qty': 5}]
+
 @app.route('/user/new_order')
+def new_order():
+    return render_template("/user/craft_a_pizza.html",all_methods= methods_JSON, all_sizes=size_JSON, all_crust=crust_JSON, all_quantities=quantity_JSON)
+
 @app.route('/user/favorite_order')
 @app.route('/user/random_order')
 def start_craft_a_pizza():
