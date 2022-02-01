@@ -19,7 +19,7 @@ class Order:
     
     @classmethod
     def save_order(cls, data ):
-        query = "INSERT INTO orders ( method, size, crust, quantity, toppings, user_id ) VALUES ( %(method)s , %(size)s, %(crust)s, %(quantity)s, %(toppings)s %(user_id)s );"
+        query = "INSERT INTO orders ( method, size, crust, quantity, toppings, number_of_toppings, user_id ) VALUES ( %(method)s , %(size)s, %(crust)s, %(quantity)s, %(toppings)s, %(number_of_toppings)s, %(user_id)s );"
     
         return connectToMySQL(cls.db).query_db( query, data )
 

@@ -93,6 +93,26 @@ def remove_orders():
     session['user_session_grand_total'] = 0
     return redirect("/user/quick_options")
 
+@app.route('/user/submit_order',methods=['GET'])
+def post_orders():
+    for ord in session['user_session_orders']:
+        print(ord)
+        data = {
+            'method': ord['method'],
+            'size': ord['size'],
+            'crust': ord['crust'],
+            'quantity': ord['quantity'],
+            'toppings': ord['toppings'],
+            'number_of_toppings': ord['number_of_toppings'],
+            'user_id': session['id']
+            }
+        Order.save_order(data)
+        
+    session['user_session_orders'] = []
+    session['user_session_grand_total'] = 0
+        
+    return redirect ("/user/quick_options")
+
 def validate_order ( order ):
     is_valid = True
 
