@@ -27,12 +27,7 @@
                 <div class="uk-navbar-left">
                     <ul class="uk-navbar-nav">
                         <il class="uk_active uk-padding-small"><a href="/user/quick_options">Home</a></il>
-                        <!-- <il class="uk-padding-small"><a href="/user/order">Order</a></il> -->
-                        {% if user.order != null: %}
-                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order ({{ user.order }})</a>
-                        {% else: %}
-                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order (0)</a>
-                        {% endif %}
+                        <il class="uk-padding-small"><a href="/user/order">Order</a></il>
                         <il class="uk-padding-small"><a href="/user/account/past_orders">Account</a></il>
                         <il class="uk-padding-small"><a href="/logout">Log Out</a></il>
                     </ul>
@@ -43,83 +38,44 @@
         <main>
             <div class="uk-flex uk-border-rounded uk-margin-xlarge-left uk-margin-xlarge-right uk-flex-column uk-padding" style="background-color: lightgray;">
                     <div class="uk-flex uk-flex-center"><h1>CRAFT - A - PIZZA</h1></div>
-                    <form>
+                    <form action="/user/send_order" method="POST" >
                         <label>Method</label>
-                        <select class="uk-select uk-form-controls" type="text" name="state" id="state" value={{request.form.state}} required>
+                        <select class="uk-select uk-form-controls" type="text" name="method" id="method">
                             <option value="">...Select your method...</option>
-                            {% for method in all_methods %}
-                                <option>{{method.name}}</option>
+                            {% for m in all_methods %}
+                                <option>{{m.method}}</option>
                             {% endfor %}
                         </select>
                         <label>Size</label>
-                        <select class="uk-select uk-form-controls" type="text" name="state" id="state" value={{request.form.state}}>
+                        <select class="uk-select uk-form-controls" type="text" name="size" id="size">
                             <option>...Select your pizza size...</option>
                             {% for s in all_sizes %}
                                 <option>{{s.size}}</option>
                             {% endfor %}
                         </select>
                         <label>Crust</label>
-                        <select class="uk-select uk-form-controls" type="text" name="state" id="state" value={{request.form.state}}>
+                        <select class="uk-select uk-form-controls" type="text" name="crust" id="crust">
                             <option>...Select your pizza crust...</option>
                             {% for c in all_crust %}
                                 <option>{{c.crust}}</option>
                             {% endfor %}
                         </select>
                         <label>Quantity</label>
-                        <select class="uk-select uk-form-controls" type="text" name="state" id="state" value={{request.form.state}}>
+                        <select class="uk-select uk-form-controls" type="text" name="quantity" id="quantity">
                             <option>...Select your quantity...</option>
                             {% for x in all_quantities %}
                                 <option>{{x.qty}}</option>
                             {% endfor %}
                         </select>
-                        <label>Toppings</label>
-                        <input type="checkbox" name="topping" value="Pepperoni">
-                        <label for="Pepperoni">Pepperoni</label>
-                        <input type="checkbox" name="topping" value="Olives">
-                        <label for="Pepperoni">Olives</label>
-                        <input type="checkbox" name="topping" value="Bacon">
-                        <label for="Pepperoni">Bacon</label>
-                        <input type="checkbox" name="topping" value="Peppers">
-                        <label for="Pepperoni">Peppers</label>
-                        <input type="checkbox" name="topping" value="Pineapple">
-                        <label for="Pepperoni">Pineapple</label>
-                        <input type="checkbox" name="topping" value="Spinach">
-                        <label for="Pepperoni">Spinach</label><br/>
+                        <div>
+                        <label>Toppings:</label>
+                            {% for t in all_toppings %}
+                                <label>&nbsp;{{t.topping}}</label>
+                                <input type="checkbox" id={{t.topping}} name={{t.topping}} value={{t.topping}}>
+                            {% endfor %}
+                        </div>
                         <input type="submit" value="Add To Order">
                     </form>
-                    <!-- <div class="uk-flex uk-flex-center uk-column-1-2-3">
-                        <div class="uk-padding-small uk-border-rounded" style="background-color:lightcyan;">
-                            <form class="uk-form-stacked" action="/user/new_order" method="POST">
-                                <div>
-                                    <textarea class="uk-textarea uk-border-rounded uk-text-large" id="new_order" name="new_order" rows="6" readonly>The rain in Spain stays mainly on the plain.</textarea>
-                                </div>
-                                <div class="uk-padding-small">
-                                    <input class="uk-width-1-1 uk-text-bold" type="submit" value="New Order">
-                                </div>
-                            </form>
-                        </div>
-                        {% for fave in favorite_order %}
-                        <div class="uk-padding-small uk-border-rounded" style="background-color:lightcyan;">
-                            <form class="uk-form-stacked" action="/user/favorite_order" method="POST">
-                                <div>
-                                    <textarea class="uk-textarea uk-border-rounded uk-text-large" id="favorite_order" name="favorite_order" rows="6" readonly>{{fave.method}},{{fave.quantity}},{{fave.toppings}}</textarea>
-                                </div>
-                                <div class="uk-padding-small">
-                                    <input class="uk-width-1-1 uk-text-bold" type="submit" value="Re-Order My Fave">
-                                </div>
-                            </form>
-                        </div>
-                        {% endfor %}
-                        <div class="uk-padding-small uk-border-rounded" style="background-color:lightcyan;">
-                                <form class="uk-form-stacked" action="/user/random_order" method="POST">
-                                    <div>
-                                        <textarea class="uk-textarea uk-border-rounded uk-text-large" id="random_order" name="random_order" rows="6" readonly>The rain in Spain stays mainly on the plain.</textarea>
-                                    </div>
-                                    <div class="uk-padding-small">
-                                        <input class="uk-width-1-1 uk-text-bold" type="submit" value="Surprise Me">
-                                    </div>
-                                </form>
-                        </div> -->
                     </div>
             </div>
         </main>

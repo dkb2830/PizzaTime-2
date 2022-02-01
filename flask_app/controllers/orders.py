@@ -7,10 +7,11 @@ from datetime import *
 
 import socket
 
-methods_JSON=[{'name': 'Carry Out'}, {'name': 'Delivery'}]
-size_JSON=[{'size': 'Small'}, {'size': 'Medium'}, {'size': 'Large'}, {'size': 'X-Large'}]
-crust_JSON=[{'crust': 'Thin Crust'}, {'crust': 'Hand Tossed'}, {'crust': 'Stuffed crust'}]
+methods_JSON=[{'method': 'Carry Out','price':0}, {'method': 'Delivery','price':10}]
+size_JSON=[{'size': 'Small','price':10}, {'size': 'Medium','price':15}, {'size': 'Large','price':20}, {'size': 'X-Large','price':25}]
+crust_JSON=[{'crust': 'Thin Crust','price':0}, {'crust': 'Hand Tossed','price':5}, {'crust': 'Stuffed crust','price':10}]
 quantity_JSON=[{'qty': 1}, {'qty': 2}, {'qty': 3}, {'qty': 4}, {'qty': 5}]
+toppings_JSON = [{'topping':'Pepperoni','price':1},{'topping':'Olives','price':1},{'topping':'Bacon','price':1},{'topping':'Peppers','price':1},{'topping':'Pineapple','price':1},{'topping':'Spinach','price':1},]
 
 @app.route('/user/new_order')
 def new_order():
@@ -18,7 +19,7 @@ def new_order():
         'id':session['id']
     }
     user=User.get_by_id(data)
-    return render_template("/user/craft_a_pizza.html", user=user,all_methods= methods_JSON, all_sizes=size_JSON, all_crust=crust_JSON, all_quantities=quantity_JSON)
+    return render_template("/user/craft_a_pizza.html", user=user,all_methods= methods_JSON, all_sizes=size_JSON, all_crust=crust_JSON, all_quantities=quantity_JSON,all_toppings=toppings_JSON)
 
 @app.route('/user/favorite_order')
 @app.route('/user/random_order')
@@ -27,54 +28,37 @@ def start_craft_a_pizza():
 
 @app.route('/user/send_order',methods=['POST'])
 def send_order_details():
-    stop_hack(request.form['user_id'],session['id'])
-    # end of code block identifying and logging out the hacker
     
-    if not validate_order( request.form):
-        return render_template("/user/new_order.html")
+    session_data = request.form
+    toppings_list = []
+    for v in session_data.values():
+        for t in toppings_JSON:
+            if v == t['topping']:
+                toppings_list.append(v)
 
     data = {
         'method':request.form['method'],
         'size':request.form['size'],
         'crust':request.form['crust'],
         'quantity':request.form['quantity'],
-        'toppings': request.form['toppings'],
+        'toppings': ", ".join(toppings_list),
+        'number_of_toppings': len(toppings_list),
         'user_id': int(session['id'])
     }
     
-    Order.save_order(data)    
+    data['order_total'] = calcOrderTotal(data)
     
-    return redirect("/user/dashboard")
+    session['user_session_orders'] = [data] + session['user_session_orders']
+    #Order.save_order(data)
+    print("Now Printing the session data: ",session['user_session_orders'])
+    
+    return redirect("/user/order")
 
-@app.route('/user/delete_order',methods=['POST'])
-def delete_user_order():
-    stop_hack(request.form['user_id'],session['id'])
-    
-    data = {'id': request.form['order_id']}
-    Order.delete_order(data)
-    
-    return redirect("/user/dashboard")
-
-def stop_hack(sender_info, session_info):
-    if int(sender_info) != int(session_info):
-        hostname = socket.gethostname()
-        ip_address = socket.gethostbyname(hostname)
-        log_data = {
-            'hostname': hostname,
-            'ip_address': ip_address,
-            'id':session['id']
-        }
-        
-        results = User.get_by_id(log_data)
-        session.clear()
-        
-        print("Your hostname:",log_data['hostname'])
-        print("Your IP Address is:",log_data['ip_address'])
-        
-        return render_template("final_warning.html",log_info=log_data,user_info=results)
-    else:
-        return False
-    
+def calcOrderTotal(info):
+    num_sum = 0
+    for m in methods_JSON:
+        print(m['method'])
+    return num_sum
 
 def validate_order ( order ):
     is_valid = True

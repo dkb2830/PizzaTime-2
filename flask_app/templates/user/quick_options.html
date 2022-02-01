@@ -25,12 +25,7 @@
                 <div class="uk-navbar-left">
                     <ul class="uk-navbar-nav">
                         <il class="uk_active uk-padding-small"><a href="/user/quick_options">Home</a></il>
-                        <!-- <il class="uk-padding-small"><a href="/user/order">Order</a></il> -->
-                        {% if user.order != null: %}
-                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order ({{ user.order }})</a>
-                        {% else: %}
-                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order (0)</a>
-                        {% endif %}
+                        <il class="uk-padding-small"><a href="/user/order">Order</a></il>
                         <il class="uk-padding-small"><a href="/user/account/past_orders">Account</a></il>
                         <il class="uk-padding-small"><a href="/logout">Log Out</a></il>
                     </ul>

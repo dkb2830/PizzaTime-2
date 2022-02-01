@@ -67,6 +67,7 @@ def login():
         return redirect("/")
 
     session['id'] = user.id
+    session['user_session_orders'] = []
 
     return redirect("/user/quick_options")
 
@@ -88,25 +89,6 @@ def show_options():
     my_fave.append(favorite_order)
     return render_template("/user/quick_options.html",favorite_order = my_fave, user=user)
 
-@app.route('/user/order')
-def your_order():
-    print(session['id'])
-    data = {
-        "id": session['id']
-        
-    }
-    user = User.get_by_id(data)
-    # test
-    
-    my_fave = []
-    if user.favorite_order != '':
-        data = {
-            "id":user.favorite_order
-        }
-    favorite_order = User.get_favorite_order(data)
-    my_fave.append(favorite_order)
-    return render_template("/user/your_order.html",favorite_order = my_fave, user=user)
-
 # old account page
 @app.route('/user/account')
 def update_account():
@@ -126,6 +108,9 @@ def update_account():
     my_fave.append(favorite_order)
     return render_template("/user/account_info.html",favorite_order = my_fave)
 
+@app.route('/user/order')
+def track_orders():
+    return render_template("/user/your_order.html")
 
 @app.route('/logout')
 def close_sessions():
