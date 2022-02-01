@@ -132,20 +132,18 @@ def close_sessions():
     session.clear()
     return render_template("index.html")
 
+
 @app.route('/user/account/past_orders')
 def account():
     data = {
         "id" : session['id']
     }
     user = User.get_by_id(data)
-    my_fave = []
-    if user.favorite_order != '':
-        data = {
-            "id":user.favorite_order
-        }
-    favorite_order = User.get_favorite_order(data)
-    my_fave.append(favorite_order)
-    return render_template("/user/info_and_past.html",favorite_order = my_fave, user=user)
+    user_orders = []
+    orders = User.get_orders_by_user(data)
+    for order in orders:
+        user_orders.append(Order(order))
+    return render_template("/user/info_and_past.html",orders=user_orders, user=user)
 
 def validate_user( user ):
         is_valid = True

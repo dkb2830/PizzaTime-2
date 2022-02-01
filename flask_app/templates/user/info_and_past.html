@@ -11,13 +11,13 @@
     <div id="page_top">
         <h1 id="page_title" style="font: bolder;">PIZZA PETE'S</h1>
         <div class="navbar">
-            <a class="navbar-button" href="/user/quick_options">HOME</a>
+            <a class="navbar-button" href="/user/quick_options">Home</a>
             {% if user.order != null: %}
                 <a class="navbar-button" href="/user/order">Order ({{ user.order }})</a>
             {% else: %}
                 <a class="navbar-button" href="/user/order">Order (0)</a>
             {% endif %}
-            <a class="navbar-button" href="/logout">LOGOUT</a>
+            <a class="navbar-button" href="/logout">Logout</a>
         </div>
     </div>
     <div class="main_body">
@@ -53,22 +53,28 @@
         </div>
         <div id="past_orders">
             <h1 class="section_title">Past Orders</h1>
-            {% if user.orders != null: %}
-                <div class="past_order">
-                    {% if user.favorite_order != null: %}
-                        <input id="favorite" type="checkbox" checked>
-                    {% else: %}
-                        <input id="favorite" type="checkbox">
-                    {% endif %}
-                    <br>
-                    {{ user.orders }}
-                </div>
-            {% else: %}
+            {% if user.orders.length == 0: %}
                 <h3>No Past Orders Found. Want to fix that?</h3>
                 <br>
                 <a href="/user/new_order">Build a Pizza</a>
+                {% else: %}
+                    {% for order in user_orders: %}
+                        {{order.updated_at}}
+                        <div class="past_order">
+                            {% if user.favorite_order != null: %}
+                                <input id="favorite" type="checkbox" checked>
+                            {% else: %}
+                                <input id="favorite" type="checkbox">
+                            {% endif %}
+                            <br>
+                            {{ user.orders }}
+                        </div>
+                    {% endfor %}
             {% endif %}
         </div>
     </div>
 </body>
 </html>
+
+
+
