@@ -163,11 +163,11 @@ def account():
 def validate_user( user ):
         is_valid = True
         # test whether a field matches the pattern
-        if len(user['fname']) < 1 or user['fname'].isspace():
+        if len(user['firstname']) < 1 or user['firstname'].isspace():
             flash("First name is blank","signup")
             is_valid = False
         
-        if len(user['lname']) < 1 or user['lname'].isspace():
+        if len(user['lastname']) < 1 or user['lastname'].isspace():
             flash("Last name is blank","signup")
             is_valid = False
         
