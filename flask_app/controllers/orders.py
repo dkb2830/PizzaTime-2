@@ -14,6 +14,8 @@ quantity_JSON=[{'qty': 1}, {'qty': 2}, {'qty': 3}, {'qty': 4}, {'qty': 5}]
 
 @app.route('/user/new_order')
 def new_order():
+    for i in methods_JSON:
+        print(i['name'])
     return render_template("/user/craft_a_pizza.html",all_methods= methods_JSON, all_sizes=size_JSON, all_crust=crust_JSON, all_quantities=quantity_JSON)
 
 @app.route('/user/favorite_order')

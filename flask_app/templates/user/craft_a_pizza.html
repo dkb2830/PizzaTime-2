@@ -1,6 +1,6 @@
-<!--/*  Authored/Developed by: Michael Akinosho
-    Date: December 19, 2021
-    Purpose: Python Stack @ Coding Dojo*/-->
+<!--/*  Front-end UI Developed by: Danielle Bergbower and Michael Akinosho
+    Date: January 31st, 2022
+    Purpose: Pizza Time website for Pizza Pete's */-->
 
 
 <!DOCTYPE html>
@@ -41,7 +41,7 @@
                         <select class="uk-select uk-form-controls" type="text" name="state" id="state" value={{request.form.state}}>
                             <option>...Select your method...</option>
                             {% for method in all_methods %}
-                                <option>{{method.name}}</option>
+                                <option>{{method[name]}}</option>
                             {% endfor %}
                         </select>
                         <label>Size</label>
