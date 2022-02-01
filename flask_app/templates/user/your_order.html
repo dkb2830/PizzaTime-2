@@ -25,8 +25,13 @@
                 <div class="uk-navbar-left">
                     <ul class="uk-navbar-nav">
                         <il class="uk_active uk-padding-small"><a href="/user/quick_options">Home</a></il>
-                        <il class="uk-padding-small"><a href="/user/order">Order</a></il>
-                        <il class="uk-padding-small"><a href="/user/account">Account</a></il>
+                        <!-- <il class="uk-padding-small"><a href="/user/order">Order</a></il> -->
+                        {% if user.order != null: %}
+                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order ({{ user.order }})</a>
+                        {% else: %}
+                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order (0)</a>
+                        {% endif %}
+                        <il class="uk-padding-small"><a href="/user/account/past_orders">Account</a></il>
                         <il class="uk-padding-small"><a href="/logout">Log Out</a></il>
                     </ul>
                 </div>
@@ -36,21 +41,28 @@
         <main>
             <h1>YOUR ORDER</h1>
             <br>
-            <h3>METHOD: {{order.method}}</h3>
+            <!-- <h3>METHOD: order.method</h3> -->
+            <h3>METHOD: </h3>
             <br>
-            <h3>Qty: {{order.quantity}}</h3>
+            <!-- <h3>Qty: order.quantity</h3> -->
+            <h3>Qty: </h3>
             <br>
-            <h3>Size: {{order.size}}</h3>
+            <!-- <h3>Size: order.size</h3> -->
+            <h3>Size: </h3>
             <br>
-            <h3>Crust: {{order.crust}}</h3>
+            <!-- <h3>Crust: order.crust</h3> -->
+            <h3>Crust: </h3>
             <br>
-            <h3>Toppings: {{order.toppings}}</h3>
+            <!-- <h3>Toppings: order.toppings</h3> -->
+            <h3>Toppings: </h3>
             <br>
-            <h2>PRICE     {{order.price}}</h2>  
+            <!-- <h2>PRICE     order.price</h2>   -->
+            <h2>PRICE     </h2>  
             <br>
             <hr>
             <br>
-            <h2>TOTAL   {{order.order_total}}</h2> 
+            <!-- <h2>TOTAL   order.order_total</h2>  -->
+            <h2>TOTAL   </h2> 
             
             <button></button>     <button></button>
 

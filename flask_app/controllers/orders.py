@@ -14,12 +14,20 @@ quantity_JSON=[{'qty': 1}, {'qty': 2}, {'qty': 3}, {'qty': 4}, {'qty': 5}]
 
 @app.route('/user/new_order')
 def new_order():
-    return render_template("/user/craft_a_pizza.html",all_methods= methods_JSON, all_sizes=size_JSON, all_crust=crust_JSON, all_quantities=quantity_JSON)
+    data = {
+        'id' : session['id']
+    }
+    user = User.get_by_id(data)
+    return render_template("/user/craft_a_pizza.html",user=user, all_methods= methods_JSON, all_sizes=size_JSON, all_crust=crust_JSON, all_quantities=quantity_JSON)
 
 @app.route('/user/favorite_order')
 @app.route('/user/random_order')
 def start_craft_a_pizza():
-    return render_template("/user/craft_a_pizza.html")
+    data = {
+        'id' : session['id']
+    }
+    user = User.get_by_id(data)
+    return render_template("/user/craft_a_pizza.html", user=user)
 
 @app.route('/user/send_order',methods=['POST'])
 def send_order_details():

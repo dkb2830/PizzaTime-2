@@ -5,20 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/info_prev_style.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/info_prev_style.css') }}">
 </head>
 <body>
     <div id="page_top">
         <h1 id="page_title" style="font: bolder;">PIZZA PETE'S</h1>
         <div class="navbar">
-            <a class="navbar-button" href="/dashboard">HOME</a>
-            <a class="navbar-button" href="/order">ORDER ({{ user.order }})</a>
+            <a class="navbar-button" href="/user/quick_options">HOME</a>
+            {% if user.order != null: %}
+                <a class="navbar-button" href="/user/order">Order ({{ user.order }})</a>
+            {% else: %}
+                <a class="navbar-button" href="/user/order">Order (0)</a>
+            {% endif %}
             <a class="navbar-button" href="/logout">LOGOUT</a>
         </div>
     </div>
     <div class="main_body">
         <div id="account_info">
-            <h1 class="section-title">Account Info</h1>
+            <h1 class="section_title">Account Info</h1>
             <form id="account_info_form" action="/account_info_process">
                 
                 <label for="first_name" class="form_titles">First Name</label>
@@ -60,7 +64,11 @@
                     <br>
                     {{user.order}}
                 </div>
-            % endif %
+            {% else: %}
+                <h3>No Past Orders Found. Want to fix that?</h3>
+                <br>
+                <a href="/user/new_order">Build a Pizza</a>
+            {% endif %}
         </div>
     </div>
 </body>
