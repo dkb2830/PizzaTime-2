@@ -1,0 +1,90 @@
+<!--/*  Front-end UI Developed by: Danielle Bergbower and Michael Akinosho
+    Date: January 31st, 2022
+    Purpose: Pizza Time website for Pizza Pete's */-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Pizza Pete's</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/site.css') }}">
+            <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.2/dist/css/uikit.min.css"> -->
+            <meta charset="UTF-8">
+            <meta name="description" content="Template HTML file">
+            <meta name="keywords" content="remember to add keywords here">
+            <meta name="author" content="Michael Akinosho">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    </head>
+    
+    <body>
+        <header>
+            <nav class="uk-flex uk-navbar-container uk-flex-around" uk-navbar style="background-color: rgb(255, 255, 255);">
+                <h1>PIZZA PETE'S</h1>
+                <div class="uk-navbar-left">
+                    <ul class="uk-navbar-nav">
+                        <il class="uk_active uk-padding-small"><a href="/user/quick_options">Home</a></il>
+                        <il class="uk-padding-small"><a href="/user/order">Order ({{session.user_session_orders|length}})</a></il>
+                        <il class="uk-padding-small"><a href="/user/account/past_orders">Account</a></il>
+                        <il class="uk-padding-small"><a href="/logout">Log Out</a></il>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        
+        <main>
+            <div class="uk-flex uk-border-rounded uk-margin-xlarge-left uk-margin-xlarge-right uk-flex-column uk-padding" style="background-color: lightgray;">
+                    <div class="uk-flex uk-flex-center"><h1>CRAFT - A - PIZZA</h1></div>
+                    <form action="/user/send_order" method="POST" >
+                        <label>Method</label>
+                        <select class="uk-select uk-form-controls" type="text" name="method" id="method">
+                            <option value="">...Select your method...</option>
+                            {% for m in all_methods %}
+                                <option>{{m.method}}</option>
+                            {% endfor %}
+                        </select>
+                        <label>Size</label>
+                        <select class="uk-select uk-form-controls" type="text" name="size" id="size">
+                            <option>...Select your pizza size...</option>
+                            {% for s in all_sizes %}
+                                <option>{{s.size}}</option>
+                            {% endfor %}
+                        </select>
+                        <label>Crust</label>
+                        <select class="uk-select uk-form-controls" type="text" name="crust" id="crust">
+                            <option>...Select your pizza crust...</option>
+                            {% for c in all_crust %}
+                                <option>{{c.crust}}</option>
+                            {% endfor %}
+                        </select>
+                        <label>Quantity</label>
+                        <select class="uk-select uk-form-controls" type="text" name="quantity" id="quantity">
+                            <option>...Select your quantity...</option>
+                            {% for x in all_quantities %}
+                                <option>{{x.qty}}</option>
+                            {% endfor %}
+                        </select>
+                        <div>
+                        <label>Toppings:</label>
+                            {% for t in all_toppings %}
+                                <label>&nbsp;&nbsp;&nbsp;{{t.topping}}</label>
+                                <input type="checkbox" id={{t.topping}} name={{t.topping}} value={{t.topping}}>
+                            {% endfor %}
+                        </div>
+                        <input type="submit" value="Add To Order">
+                    </form>
+                    </div>
+            </div>
+        </main>
+        <footer>
+            <nav class="uk-navbar-container" uk-navbar style="background-color: rgb(255, 255, 255);">
+                
+            </nav>
+
+        </footer>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+    </body>
+</html>

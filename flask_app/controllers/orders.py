@@ -4,6 +4,7 @@ from flask_app.models.user import User
 from flask_app import app
 from werkzeug.datastructures import ImmutableMultiDict
 from datetime import *
+import random
 
 import socket
 
@@ -22,9 +23,29 @@ def new_order():
     return render_template("/user/craft_a_pizza.html", user=user,all_methods= methods_JSON, all_sizes=size_JSON, all_crust=crust_JSON, all_quantities=quantity_JSON,all_toppings=toppings_JSON)
 
 @app.route('/user/favorite_order')
+def crafted_fav_pizza():
+    data = {
+        'id' : session['id']
+    }
+    user=User.get_by_id(data)
+    return render_template("/user/crafted_fav_pizza.html", user=user)
+
+
 @app.route('/user/random_order')
 def start_craft_a_pizza():
-    return render_template("/user/craft_a_pizza.html")
+    random_pizza = {
+        'method' : random.choice(methods_JSON),
+        'size' : random.choice(size_JSON),
+        'crust' : random.choice(crust_JSON),
+        'quantity' : random.choice(quantity_JSON),
+        'toppings' : random.choice(toppings_JSON)
+        }
+    data = {
+        'id' : session['id']
+    }
+    print(random_pizza)
+    user=User.get_by_id(data)
+    return render_template("/user/crafted_pizza.html", user=user, all_methods= methods_JSON, all_sizes=size_JSON, all_crust=crust_JSON, all_quantities=quantity_JSON, all_toppings=toppings_JSON, random_pizza=random_pizza)
 
 @app.route('/user/send_order',methods=['POST'])
 def send_order_details():
