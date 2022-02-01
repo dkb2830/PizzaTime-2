@@ -1,0 +1,15 @@
+1. populate the craft-a-pizz with fav/surprise
+
+2. make an order save to the database
+
+3. figure out div for quick select if no fav available
+
+4. populate div for past orders
+
+5. pricing function written and connected
+
+6. pre-populate account update field
+
+7. populate the fields for checkout
+
+8. validations for account update

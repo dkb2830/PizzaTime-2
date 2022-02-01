@@ -27,6 +27,11 @@ class User:
         
         print(results[0])
         return cls(results[0])
+
+    @classmethod
+    def update_user(cls, data):
+        query = "UPDATE users SET firstname=%(firstname)s, lastname=%(lastname)s, email=%(email)s, address%(address)s, city=%(city)s, state=%(state)s WHERE id=%(id)s;"
+        return connectToMySQL(cls.db).query_db(query, data)
         
     @classmethod
     def save(cls, data ):
@@ -51,7 +56,7 @@ class User:
     
     @classmethod
     def update_user_favorite(cls, data):
-        query = "UPDATE users SET favorite = %(favorite)s WHERE id %(id)s;"
+        query = "UPDATE users SET favorite = %(favorite)s WHERE id = %(id)s;"
         
         return connectToMySQL(cls.db).query_db(query, data)
     

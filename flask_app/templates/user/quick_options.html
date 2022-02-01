@@ -52,11 +52,11 @@
                                 </div>
                             </form>
                         </div>
-                        {% for fave in favorite_order %}
+                        <!-- {% for fave in favorite_order %} -->
                         <div class="uk-padding-small uk-border-rounded" style="background-color:lightcyan;">
                             <form class="uk-form-stacked" action="/user/favorite_order">
                                 <div>
-                                    {% if favorite_order == null: %}
+                                    {% if user.favorite_order == null: %}
                                         <textarea class="uk-textarea uk-border-rounded uk-text-large" id="favorite_order" name="favorite_order" rows="6" readonly>You have no favorite orders...Yet.</textarea>
                                     {% else: %}
                                         <textarea class="uk-textarea uk-border-rounded uk-text-large" id="favorite_order" name="favorite_order" rows="6" readonly>{{favorite_order.method}},{{favorite_order.quantity}},{{favorite_order.toppings}}</textarea>
@@ -69,7 +69,7 @@
                                 {% endif %}
                             </form>
                         </div>
-                        {% endfor %}
+                        <!-- {% endfor %} -->
                         <div class="uk-padding-small uk-border-rounded" style="background-color:lightcyan;">
                                 <form class="uk-form-stacked" action="/user/random_order">
                                     <div>

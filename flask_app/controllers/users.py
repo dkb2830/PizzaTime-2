@@ -133,6 +133,21 @@ def close_sessions():
     return render_template("index.html")
 
 
+@app.route('/user/update',methods=["POST"])
+def update_user():
+    data = {
+        id : session['id'],
+        "fname": request.form["fname"],
+        "lname": request.form["lname"],
+        "email": request.form['email'],
+        "address": request.form['address'],
+        "city": request.form['city'],
+        "state": request.form['state'],
+    }
+    user=User.update_user(data)
+    return redirect('/user/account/past_orders', user=user)
+
+
 @app.route('/user/account/past_orders')
 def account():
     data = {
@@ -143,16 +158,16 @@ def account():
     orders = User.get_orders_by_user(data)
     for order in orders:
         user_orders.append(Order(order))
-    return render_template("/user/info_and_past.html",orders=user_orders, user=user)
+    return render_template("/user/info_and_past.html",orders=user_orders, user=user, all_states = states_JSON)
 
 def validate_user( user ):
         is_valid = True
         # test whether a field matches the pattern
-        if len(user['firstname']) < 1 or user['fname'].isspace():
+        if len(user['fname']) < 1 or user['fname'].isspace():
             flash("First name is blank","signup")
             is_valid = False
         
-        if len(user['lastname']) < 1 or user['lname'].isspace():
+        if len(user['lname']) < 1 or user['lname'].isspace():
             flash("Last name is blank","signup")
             is_valid = False
         

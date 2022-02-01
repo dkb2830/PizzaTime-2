@@ -23,29 +23,29 @@
     <div class="main_body">
         <div id="account_info">
             <h1 class="section_title">Account Info</h1>
-            <form id="account_info_form" action="/account_info_process">
+            <form id="account_info_form" action="/user/update" method="POST">
                 
                 <label for="first_name" class="form_titles">First Name</label>
-                <input class="form_item" type="text"><br><br>
+                <input class="form_item" name="fname" id="fname" type="text" value="{{user.firstname}}"><br><br>
 
                 <label for="last_name" class="form_titles">Last Name</label>
-                <input class="form_item" type="text"><br><br>
+                <input class="form_item" name="lname" id="lname" type="text" value="{{user.lastname}}"><br><br>
                 
                 <label for="email" class="form_titles">Email</label>
-                <input class="form_item" type="email"><br><br>
+                <input class="form_item" name="email" id="email" type="email" value="{{user.email}}"><br><br>
                 
                 <label for="address" class="form_titles">Address</label>
-                <input class="form_item" type="text"><br><br>
+                <input class="form_item" name="address" id="address" type="text" value="{{user.address}}"><br><br>
                 
                 <label for="city" class="form_titles_extra">City</label>
-                <input id="form_city" type="text">
+                <input id="form_city" name="city" id="city" type="text" value="{{user.city}}">
                 
                 <label for="state" class="form_titles_extra">State</label>
                 <select name="state" id="form_state">
-                    <option value="idaho">ID</option>
-                    <option value="washington">WA</option>
-                    <option value="california">CA</option>
-                    <option value="oregon">OR</option>
+                    {% for state in all_states %}
+                        <option>{{state.name}}</option>
+                    {% endfor %}
+                    <option value="">{{user.state}}</option selected="selected">
                 </select>
                 <br><br>
                 <input class="form_submit" type="submit" value="UPDATE">
