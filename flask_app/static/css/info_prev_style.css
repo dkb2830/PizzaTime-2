@@ -1,0 +1,91 @@
+* {
+    margin-top: 1em;
+    border-radius: 0.5em;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: whitesmoke;
+    margin-left: 20em;
+    margin-right: 20em;
+    height: 55em;
+    border: 1px black solid;
+}
+
+.main_body {
+    display: inline;
+    font-size: large;
+}
+
+#page_title {
+    padding-left: 3em;
+}
+
+.section_title {
+    text-decoration: underline;
+}
+
+#page_top {
+    display: flex;
+    align-items: center;
+    padding-bottom: 1em;
+    margin-top: 0em;
+    border: 2px black solid;
+    background-color: rgba(3, 73, 187, 0.65);
+}
+
+.navbar {
+    border: 1px black;
+    background-color: rgba(3, 73, 187, 0.041);
+    width: 20em;
+    height: .8em;
+    align-items: center;
+    display: flex;
+    margin-left: 50%;
+    padding-bottom: .75em;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    padding: 0.2em;
+    border: rgb(105, 38, 26) solid 1px;
+    background-color: rgb(17, 0, 255);
+}
+
+.form_titles {
+    margin-top: 2em;
+    display: inline-block;
+    clear: left;
+    width: 6em;
+    text-align: left;
+}
+
+.form_titles_extra {
+    margin-top: 2em;
+    display: inline-block;
+    clear: left;
+}
+
+.form_item {
+    width: 14.25em;
+}
+
+#account_info {
+    float: left;
+    margin-right: 20em;
+    margin-left: 7em;
+}
+
+#past_orders {
+    float: left;
+}
+
+.past_order {
+    border-bottom: solid black .1em;
+    padding-bottom: 1em;
+}
+
+input {
+    display: inline-block;
+}

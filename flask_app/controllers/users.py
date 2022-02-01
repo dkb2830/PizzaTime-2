@@ -86,7 +86,7 @@ def show_options():
         }
     favorite_order = User.get_favorite_order(data)
     my_fave.append(favorite_order)
-    return render_template("/user/quick_options.html",favorite_order = my_fave)
+    return render_template("/user/quick_options.html",favorite_order = my_fave, user=user)
 
 @app.route('/user/order')
 def your_order():
@@ -105,8 +105,9 @@ def your_order():
         }
     favorite_order = User.get_favorite_order(data)
     my_fave.append(favorite_order)
-    return render_template("/user/your_order.html",favorite_order = my_fave)
+    return render_template("/user/your_order.html",favorite_order = my_fave, user=user)
 
+# old account page
 @app.route('/user/account')
 def update_account():
     print(session['id'])
@@ -131,14 +132,27 @@ def close_sessions():
     session.clear()
     return render_template("index.html")
 
+
+@app.route('/user/account/past_orders')
+def account():
+    data = {
+        "id" : session['id']
+    }
+    user = User.get_by_id(data)
+    user_orders = []
+    orders = User.get_orders_by_user(data)
+    for order in orders:
+        user_orders.append(Order(order))
+    return render_template("/user/info_and_past.html",orders=user_orders, user=user)
+
 def validate_user( user ):
         is_valid = True
         # test whether a field matches the pattern
-        if len(user['fname']) < 1 or user['fname'].isspace():
+        if len(user['firstname']) < 1 or user['fname'].isspace():
             flash("First name is blank","signup")
             is_valid = False
         
-        if len(user['lname']) < 1 or user['lname'].isspace():
+        if len(user['lastname']) < 1 or user['lname'].isspace():
             flash("Last name is blank","signup")
             is_valid = False
         

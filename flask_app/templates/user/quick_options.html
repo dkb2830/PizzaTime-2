@@ -25,8 +25,13 @@
                 <div class="uk-navbar-left">
                     <ul class="uk-navbar-nav">
                         <il class="uk_active uk-padding-small"><a href="/user/quick_options">Home</a></il>
-                        <il class="uk-padding-small"><a href="/user/order">Order</a></il>
-                        <il class="uk-padding-small"><a href="/user/account">Account</a></il>
+                        <!-- <il class="uk-padding-small"><a href="/user/order">Order</a></il> -->
+                        {% if user.order != null: %}
+                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order ({{ user.order }})</a>
+                        {% else: %}
+                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order (0)</a>
+                        {% endif %}
+                        <il class="uk-padding-small"><a href="/user/account/past_orders">Account</a></il>
                         <il class="uk-padding-small"><a href="/logout">Log Out</a></il>
                     </ul>
                 </div>
@@ -40,7 +45,7 @@
                         <div class="uk-padding-small uk-border-rounded" style="background-color:lightcyan;">
                             <form class="uk-form-stacked" action="/user/new_order">
                                 <div>
-                                    <textarea class="uk-textarea uk-border-rounded uk-text-large" id="new_order" name="new_order" rows="6" readonly>The rain in Spain stays mainly on the plain.</textarea>
+                                    <textarea class="uk-textarea uk-border-rounded uk-text-large" id="new_order" name="new_order" rows="6" readonly>Build your own delicious pizza and grab a stack of three of them today for a great low price. What are you waiting for, that pepperoni is calling your name!</textarea>
                                 </div>
                                 <div class="uk-padding-small">
                                     <input class="uk-width-1-1 uk-text-bold" type="submit" value="New Order">
@@ -51,18 +56,24 @@
                         <div class="uk-padding-small uk-border-rounded" style="background-color:lightcyan;">
                             <form class="uk-form-stacked" action="/user/favorite_order">
                                 <div>
-                                    <textarea class="uk-textarea uk-border-rounded uk-text-large" id="favorite_order" name="favorite_order" rows="6" readonly>{{fave.method}},{{fave.quantity}},{{fave.toppings}}</textarea>
+                                    {% if favorite_order == null: %}
+                                        <textarea class="uk-textarea uk-border-rounded uk-text-large" id="favorite_order" name="favorite_order" rows="6" readonly>You have no favorite orders...Yet.</textarea>
+                                    {% else: %}
+                                        <textarea class="uk-textarea uk-border-rounded uk-text-large" id="favorite_order" name="favorite_order" rows="6" readonly>{{favorite_order.method}},{{favorite_order.quantity}},{{favorite_order.toppings}}</textarea>
+                                    {% endif %}
                                 </div>
-                                <div class="uk-padding-small">
-                                    <input class="uk-width-1-1 uk-text-bold" type="submit" value="Re-Order My Fave">
-                                </div>
+                                {% if favorite_order != null: %}
+                                    <div class="uk-padding-small">
+                                        <input class="uk-width-1-1 uk-text-bold" type="submit" value="Re-Order My Fave">
+                                    </div>
+                                {% endif %}
                             </form>
                         </div>
                         {% endfor %}
                         <div class="uk-padding-small uk-border-rounded" style="background-color:lightcyan;">
                                 <form class="uk-form-stacked" action="/user/random_order">
                                     <div>
-                                        <textarea class="uk-textarea uk-border-rounded uk-text-large" id="random_order" name="random_order" rows="6" readonly>Don't go chasing waterfalls. Stick to the rivers and streams you are used to...</textarea>
+                                        <textarea class="uk-textarea uk-border-rounded uk-text-large" id="random_order" name="random_order" rows="6" readonly>Feeling a little adventurous or just can't decide? Either way, spice up your night with a pizza creation from the masters!</textarea>
                                     </div>
                                     <div class="uk-padding-small">
                                         <input class="uk-width-1-1 uk-text-bold" type="submit" value="Surprise Me">

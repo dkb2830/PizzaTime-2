@@ -1,13 +1,15 @@
-<!--/*  Authored/Developed by: Michael Akinosho
-    Date: December 19, 2021
-    Purpose: Python Stack @ Coding Dojo*/-->
+<!--/*  Front-end UI Developed by: Danielle Bergbower and Michael Akinosho
+    Date: January 31st, 2022
+    Purpose: Pizza Time website for Pizza Pete's */-->
 
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <title>Pizza Pete's</title>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/style.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/site.css') }}">
             <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.2/dist/css/uikit.min.css"> -->
             <meta charset="UTF-8">
@@ -25,8 +27,13 @@
                 <div class="uk-navbar-left">
                     <ul class="uk-navbar-nav">
                         <il class="uk_active uk-padding-small"><a href="/user/quick_options">Home</a></il>
-                        <il class="uk-padding-small"><a href="/user/order">Order</a></il>
-                        <il class="uk-padding-small"><a href="/user/account">Account</a></il>
+                        <!-- <il class="uk-padding-small"><a href="/user/order">Order</a></il> -->
+                        {% if user.order != null: %}
+                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order ({{ user.order }})</a>
+                        {% else: %}
+                            <il class="uk_active uk-padding-small"><a class="navbar-button" href="/user/order">Order (0)</a>
+                        {% endif %}
+                        <il class="uk-padding-small"><a href="/user/account/past_orders">Account</a></il>
                         <il class="uk-padding-small"><a href="/logout">Log Out</a></il>
                     </ul>
                 </div>
@@ -38,10 +45,10 @@
                     <div class="uk-flex uk-flex-center"><h1>CRAFT - A - PIZZA</h1></div>
                     <form>
                         <label>Method</label>
-                        <select class="uk-select uk-form-controls" type="text" name="state" id="state" value={{request.form.state}}>
-                            <option>...Select your method...</option>
+                        <select class="uk-select uk-form-controls" type="text" name="state" id="state" value={{request.form.state}} required>
+                            <option value="">...Select your method...</option>
                             {% for method in all_methods %}
-                                <option>{{method.name}}</option>
+                                <option>{{method[name]}}</option>
                             {% endfor %}
                         </select>
                         <label>Size</label>
