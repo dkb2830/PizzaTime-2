@@ -37,7 +37,7 @@
             <div class="uk-flex uk-overflow_auto uk-container uk-flex-center uk-column-1-2-3">
                 <div class="uk-padding uk-border-rounded" style="background-color:rgb(172, 172, 172);">
                     <h1>YOUR ORDER(S)</h1>
-                    <form class="uk-form-stacked" action="/signup/user" method="POST">
+                    <form class="uk-form-stacked" action="/user/cancel_order" method="GET">
                         {% for order in session.user_session_orders %}
                             <div class="uk-flex">
                                 <label class="uk-form-label" for="cart_order_no">Cart Order Number:&nbsp;</label>
@@ -63,12 +63,21 @@
                                 <label class="uk-form-label" for="toppings">Toppings:&nbsp;</label>
                                 <label class="uk-form-label" for="toppings">{{ order.toppings}}</label>
                             </div>
+                            <div class="uk-flex">
+                                <label class="uk-form-label" for="Order Price">Order Total:&nbsp;</label>
+                                <label class="uk-form-label uk-text-bold" for="Order Price">{{ '$%0.2f' % order.order_total}}</label>
+                            </div>
                             <hr class="uk-divider-icon">
 
                         {% endfor %}
+                        <div class="uk-flex">
+                            <label class="uk-form-label" for="grand_total">Grand Total:&nbsp;</label>
+                            <label class="uk-form-label uk-text-bold" for="grand_total">{{ '$%0.2f' % session.user_session_grand_total}}</label>
+                        </div>
 
-                        <div class="uk-padding-small">
-                            <input class="uk-width-1-1" type="submit" value="Sign Up">
+                        <div class="uk-padding-small uk-flex-inline">
+                            <input class="uk-margin-right uk-button-danger" type="submit" value="Cancel All Orders">
+                            <input class="uk-margin-left" type="submit" value="Submit All Orders">
                         </div>
                     </form>
                 </div>

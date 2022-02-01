@@ -47,22 +47,49 @@ def send_order_details():
     }
     
     data['order_total'] = calcOrderTotal(data)
-    
+        
     session['user_session_orders'] = [data] + session['user_session_orders']
-    #Order.save_order(data)
-    print("Now Printing the session data: ",session['user_session_orders'])
+    
+    session['user_session_grand_total'] = calcGrandTotal(session['user_session_orders'])
+    
+    #print("Now Printing the session data: ",session['user_session_orders'])
     
     return redirect("/user/order")
 
 def calcOrderTotal(info):
     num_sum = 0
+    
     for m in methods_JSON:
-        print(m['method'])
+        print(m['method'], m['price'])
+        if info['method'] == m['method']:
+            num_sum += m['price']
+            
+    for s in size_JSON:
+        print(s['size'], s['price'])
+        if info['size'] == s['size']:
+            num_sum += s['price']
+            
+    for c in crust_JSON:
+        print(c['crust'], c['price'])
+        if info['crust'] == c['crust']:
+            num_sum += c['price']
+
+    num_sum += info['number_of_toppings'] * 1
+
+    num_sum += (num_sum * int(info['quantity']))
+
+    return num_sum
+
+def calcGrandTotal(info):
+    num_sum = 0
+    for i in info:
+        #print(i['order_total'])
+        num_sum += int(i['order_total'])
     return num_sum
 
 def validate_order ( order ):
     is_valid = True
-    
+
     if len(order['method']) < 1 or order['method'].isspace():
         flash("Method is blank","order")
         is_valid = False
@@ -70,7 +97,7 @@ def validate_order ( order ):
     if len(order['size']) < 1 or order['size'].isspace():
         flash("Size is blank","order")
         is_valid = False
-            
+
     if len(order['crust']) < 1 or order['crust'].isspace():
         flash("Crust is blank","order")
         is_valid = False
