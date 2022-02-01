@@ -85,8 +85,8 @@ def show_options():
         data = {
             "id":user.favorite_order
         }
-    favorite_order = User.get_favorite_order(data)
-    my_fave.append(favorite_order)
+        favorite_order = User.get_favorite_order(data)
+        my_fave.append(favorite_order)
     return render_template("/user/quick_options.html",favorite_order = my_fave, user=user)
 
 # old account page

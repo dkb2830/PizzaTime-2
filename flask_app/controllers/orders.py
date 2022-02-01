@@ -87,6 +87,12 @@ def calcGrandTotal(info):
         num_sum += int(i['order_total'])
     return num_sum
 
+@app.route('/user/cancel_order')
+def remove_orders():
+    session['user_session_orders'] = []
+    session['user_session_grand_total'] = 0
+    return redirect("/user/quick_options")
+
 def validate_order ( order ):
     is_valid = True
 
