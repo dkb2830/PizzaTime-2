@@ -53,16 +53,15 @@
         </div>
         <div id="past_orders">
             <h1 class="section_title">Past Orders</h1>
-            {% if user.order == 0: %}
+            {% if user.orders != null: %}
                 <div class="past_order">
-                    {{ order.date }}
-                    {% if order.favorite == 0: %}
+                    {% if user.favorite_order != null: %}
                         <input id="favorite" type="checkbox" checked>
                     {% else: %}
                         <input id="favorite" type="checkbox">
                     {% endif %}
                     <br>
-                    {{user.order}}
+                    {{ user.orders }}
                 </div>
             {% else: %}
                 <h3>No Past Orders Found. Want to fix that?</h3>
