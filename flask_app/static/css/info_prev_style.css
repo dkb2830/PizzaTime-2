@@ -77,15 +77,30 @@ a {
     margin-left: 7em;
 }
 
-#past_orders {
+.past_orders {
     float: left;
+    height: 30em;
+    width: auto;
+    overflow-x:hidden;
+    border: black solid 1px;
+    padding: 1em;
+    background-color: rgb(235, 235, 235);
 }
 
 .past_order {
     border-bottom: solid black .1em;
     padding-bottom: 1em;
+    margin-bottom: 1em;
 }
 
 input {
     display: inline-block;
+}
+
+#sect_title_1 {
+    margin-top: 1.5em;
+}
+
+.paragraph {
+    margin: 0;
 }

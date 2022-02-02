@@ -56,19 +56,17 @@ def send_order_details():
         for t in toppings_JSON:
             if v == t['topping']:
                 toppings_list.append(v)
-
     data = {
         'method':request.form['method'],
         'size':request.form['size'],
         'crust':request.form['crust'],
-        'quantity':request.form['quantity'],
+        'quantity':int(request.form['quantity']),
         'toppings': ", ".join(toppings_list),
         'number_of_toppings': len(toppings_list),
         'user_id': int(session['id'])
     }
-    
     data['order_total'] = calcOrderTotal(data)
-        
+    print(data)
     session['user_session_orders'] = [data] + session['user_session_orders']
     
     session['user_session_grand_total'] = calcGrandTotal(session['user_session_orders'])
@@ -96,9 +94,8 @@ def calcOrderTotal(info):
             num_sum += c['price']
 
     num_sum += info['number_of_toppings'] * 1
-
-    num_sum += (num_sum * int(info['quantity']))
-
+    
+    num_sum = (num_sum * int(info['quantity']))
     return num_sum
 
 def calcGrandTotal(info):

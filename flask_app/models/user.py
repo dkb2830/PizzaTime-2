@@ -2,6 +2,13 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models.order import Order
 
+
+methods_JSON=[{'method': 'Carry Out','price':0}, {'method': 'Delivery','price':10}]
+size_JSON=[{'size': 'Small','price':10}, {'size': 'Medium','price':15}, {'size': 'Large','price':20}, {'size': 'X-Large','price':25}]
+crust_JSON=[{'crust': 'Thin Crust','price':0}, {'crust': 'Hand Tossed','price':5}, {'crust': 'Stuffed crust','price':10}]
+quantity_JSON=[{'qty': 1}, {'qty': 2}, {'qty': 3}, {'qty': 4}, {'qty': 5}]
+toppings_JSON = [{'topping':'Pepperoni','price':1},{'topping':'Olives','price':1},{'topping':'Bacon','price':1},{'topping':'Peppers','price':1},{'topping':'Pineapple','price':1},{'topping':'Spinach','price':1},]
+
 class User:
     db = 'pizza_petes'
     def __init__( self , data ):
@@ -13,7 +20,7 @@ class User:
         self.city = data['city']
         self.state = data['state']
         self.password = data['password']
-        self.favorite_order = ''
+        self.favorite_order = data['favorite_order']
         self.created_at = ''
         self.updated_at = ''
     # Now we use class methods to query our database
@@ -69,3 +76,27 @@ class User:
             return False
         
         return Order(results[0])
+
+    @staticmethod
+    def calcOrderTotal(info):
+        num_sum = 0
+        
+        for m in methods_JSON:
+            print(m['method'], m['price'])
+            if info['method'] == m['method']:
+                num_sum += m['price']
+                
+        for s in size_JSON:
+            print(s['size'], s['price'])
+            if info['size'] == s['size']:
+                num_sum += s['price']
+                
+        for c in crust_JSON:
+            print(c['crust'], c['price'])
+            if info['crust'] == c['crust']:
+                num_sum += c['price']
+
+        num_sum += info['number_of_toppings'] * 1
+        
+        num_sum = (num_sum * int(info['quantity']))
+        return num_sum

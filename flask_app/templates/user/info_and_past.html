@@ -51,26 +51,25 @@
                 <input class="form_submit" type="submit" value="UPDATE">
             </form>
         </div>
-        <div id="past_orders">
-            <h1 class="section_title">Past Orders</h1>
-            {% if user.orders.length == 0: %}
+        <h1 class="section_title" id="sect_title_1">Past Orders</h1>
+        <div class="past_orders">
+            {% if orders.length == 0: %}
                 <h3>No Past Orders Found. Want to fix that?</h3>
                 <br>
                 <a href="/user/new_order">Build a Pizza</a>
-                {% else: %}
-                    {% for order in user_orders: %}
-                        {{order.updated_at}}
-                        <div class="past_order">
-                            {% if user.favorite_order != null: %}
-                                <input id="favorite" type="checkbox" checked>
-                            {% else: %}
-                                <input id="favorite" type="checkbox">
-                            {% endif %}
-                            <br>
-                            {{ user.orders }}
-                        </div>
-                    {% endfor %}
             {% endif %}
+            {% for order in orders: %}
+                {{order.updated_at}}
+                <div class="past_order">
+                    {% if user.favorite_order == order.id: %}
+                        <p>{{ order.size }}, {{ order.toppings }}, {{ order.order_total }}</p>
+                        <input id="favorite" type="checkbox" value="{{user.favorite_order}}" checked>
+                    {% else: %}
+                        <input id="favorite" type="checkbox">
+                        <p class="paragraph">{{ order.size }}, {{ order.toppings }}, {{ order.order_total }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
         </div>
     </div>
 </body>

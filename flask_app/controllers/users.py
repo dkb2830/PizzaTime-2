@@ -5,7 +5,6 @@ from flask import flash
 import re
 from flask_app import app
 from flask_bcrypt import Bcrypt
-from werkzeug.datastructures import ImmutableMultiDict
 
 # create a regular expression object that we'll use later
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
@@ -142,8 +141,22 @@ def account():
     user_orders = []
     orders = User.get_orders_by_user(data)
     for order in orders:
-        user_orders.append(Order(order))
-    return render_template("/user/info_and_past.html",orders=user_orders, user=user, all_states = states_JSON)
+        data = {
+            'id' : order['id'],
+            'method' : order["method"],
+            'size' : order['size'],
+            'crust' : order['crust'],
+            "quantity" : order['quantity'],
+            'toppings' : order['toppings'],
+            'number_of_toppings' : order['number_of_toppings'],
+            'updated_at' : order['updated_at']
+        }
+        print(order)
+        data['order_total'] = User.calcOrderTotal(data)
+        user_orders.append(data)
+    print("LOOK AT ME", user.favorite_order)
+    print(user_orders)
+    return render_template("/user/info_and_past.html", orders=user_orders, user=user, all_states = states_JSON)
 
 def validate_user( user ):
         is_valid = True

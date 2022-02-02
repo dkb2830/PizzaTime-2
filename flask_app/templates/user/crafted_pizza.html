@@ -40,7 +40,7 @@
                     <form action="/user/send_order" method="POST" >
                         <label>Method</label>
                         <select class="uk-select uk-form-controls" type="text" name="method" id="method">
-                            <option value="">{{random_pizza.method}}</option>
+                            <option value="{{random_pizza.method.method}}" selected>{{random_pizza.method.method}}</option>
                             <!-- <option>...Select your method...</option> -->
                             {% for m in all_methods %}
                                 <option value="">{{m.method}}</option>
@@ -48,7 +48,7 @@
                         </select>
                         <label>Size</label>
                         <select class="uk-select uk-form-controls" type="text" name="size" id="size">
-                            <option value="">{{random_pizza.size}}</option>
+                            <option value="{{random_pizza.size.size}}" selected>{{random_pizza.size.size}}</option>
                             <!-- <option>...Select your pizza size...</option> -->
                             {% for s in all_sizes %}
                                 <option>{{s.size}}</option>
@@ -56,7 +56,7 @@
                         </select>
                         <label>Crust</label>
                         <select class="uk-select uk-form-controls" type="text" name="crust" id="crust">
-                            <option value="">{{random_pizza.crust}}</option>
+                            <option value="{{random_pizza.crust.crust}}" selected>{{random_pizza.crust.crust}}</option>
                             <!-- <option>...Select your pizza crust...</option> -->
                             {% for c in all_crust %}
                                 <option>{{c.crust}}</option>
@@ -64,22 +64,20 @@
                         </select>
                         <label>Quantity</label>
                         <select class="uk-select uk-form-controls" type="text" name="quantity" id="quantity">
-                            <option value="">1</option>
-                            <!-- <option>...Select your quantity...</option> -->
                             {% for x in all_quantities %}
                                 <option>{{x.qty}}</option>
                             {% endfor %}
                         </select>
                         <div>
                         <label>Toppings:</label>
-                            <!-- {% for t in all_toppings %}
-                                <label>&nbsp;&nbsp;&nbsp;{{t.topping}}</label>
-                                <input type="checkbox" id={{t.topping}} name={{t.topping}} value={{random_pizza.topping}} checked>
-                            {% endfor %} -->
-                        <input type="checkbox" id={{random_pizza.topping}} name={{random_pizza.topping}} value={{random_pizza.topping}} checked> -->
                             {% for t in all_toppings %}
-                                <label>&nbsp;&nbsp;&nbsp;{{t.topping}}</label>
-                                <input type="checkbox" id={{t.topping}} name={{t.topping}} value={{t.topping}}>
+                                {% if t.topping == random_pizza.toppings.topping %}
+                                    <label>&nbsp;&nbsp;&nbsp;{{t.topping}}</label>
+                                    <input type="checkbox" id="{{random_pizza.toppings.topping}}" name="{{random_pizza.toppings.topping}}" value="{{random_pizza.toppings.topping}}" checked>
+                                {% else: %}
+                                    <label>&nbsp;&nbsp;&nbsp;{{t.topping}}</label>
+                                    <input type="checkbox" id={{t.topping}} name={{t.topping}} value={{t.topping}}>
+                                {% endif %}
                             {% endfor %}
                         </div>
                         <input type="submit" value="Add To Order">
