@@ -73,14 +73,14 @@ a {
 
 #account_info {
     float: left;
-    margin-right: 20em;
+    margin-right: 12em;
     margin-left: 7em;
 }
 
 .past_orders {
     float: left;
-    height: 30em;
-    width: auto;
+    height: 28em;
+    width: 23em;
     overflow-x:hidden;
     border: black solid 1px;
     padding: 1em;
@@ -89,8 +89,9 @@ a {
 
 .past_order {
     border-bottom: solid black .1em;
-    padding-bottom: 1em;
+    padding: 0.5em;
     margin-bottom: 1em;
+    background-color: tomato;
 }
 
 input {
@@ -103,4 +104,5 @@ input {
 
 .paragraph {
     margin: 0;
+    font-weight: bolder;
 }

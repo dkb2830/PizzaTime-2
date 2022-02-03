@@ -25,11 +25,11 @@
             <h1 class="section_title">Account Info</h1>
             <form id="account_info_form" action="/user/update" method="POST">
                 
-                <label for="first_name" class="form_titles">First Name</label>
-                <input class="form_item" name="fname" id="fname" type="text" value="{{user.firstname}}"><br><br>
+                <label for="firstname" class="form_titles">First Name</label>
+                <input class="form_item" name="firstname" id="firstname" type="text" value="{{user.firstname}}"><br><br>
 
-                <label for="last_name" class="form_titles">Last Name</label>
-                <input class="form_item" name="lname" id="lname" type="text" value="{{user.lastname}}"><br><br>
+                <label for="lame" class="form_titles">Last Name</label>
+                <input class="form_item" name="lastname" id="lastname" type="text" value="{{user.lastname}}"><br><br>
                 
                 <label for="email" class="form_titles">Email</label>
                 <input class="form_item" name="email" id="email" type="email" value="{{user.email}}"><br><br>
@@ -48,28 +48,29 @@
                     <option value="">{{user.state}}</option selected="selected">
                 </select>
                 <br><br>
-                <input class="form_submit" type="submit" value="UPDATE">
+                <input class="form_submit" type="submit">
             </form>
         </div>
         <h1 class="section_title" id="sect_title_1">Past Orders</h1>
         <div class="past_orders">
-            {% if orders.length == 0: %}
+            {% if orders.length != 0: %}
                 <h3>No Past Orders Found. Want to fix that?</h3>
                 <br>
                 <a href="/user/new_order">Build a Pizza</a>
+            {% else: %}
+                {% for order in orders: %}
+                    {{order.updated_at}}
+                    <div class="past_order">
+                        {% if user.favorite_order == order.id: %}
+                            <p class="paragraph">{{ order.size }}, {{ order.toppings }}, ${{ order.order_total }}</p>
+                            <input id="favorite" type="checkbox" checked>
+                        {% else: %}
+                            <p class="paragraph">{{ order.size }}, {{ order.toppings }}, ${{ order.order_total }}</p>
+                            <input id="favorite" type="checkbox">
+                        {% endif %}
+                    </div>
+                {% endfor %}
             {% endif %}
-            {% for order in orders: %}
-                {{order.updated_at}}
-                <div class="past_order">
-                    {% if user.favorite_order == order.id: %}
-                        <p>{{ order.size }}, {{ order.toppings }}, {{ order.order_total }}</p>
-                        <input id="favorite" type="checkbox" value="{{user.favorite_order}}" checked>
-                    {% else: %}
-                        <input id="favorite" type="checkbox">
-                        <p class="paragraph">{{ order.size }}, {{ order.toppings }}, {{ order.order_total }}</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
         </div>
     </div>
 </body>

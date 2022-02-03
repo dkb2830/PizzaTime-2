@@ -6,7 +6,7 @@ import re
 from flask_app import app
 from flask_bcrypt import Bcrypt
 
-# create a regular expression object that we'll use later
+
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 # List of US States
@@ -39,8 +39,8 @@ def sign_up():
     pw_hash = bcrypt.generate_password_hash(request.form['password'])
     
     data = {
-        "fname": request.form["fname"],
-        "lname": request.form["lname"],
+        "firstname": request.form["firstname"],
+        "lastname": request.form["lastname"],
         "email": request.form['email'],
         "address": request.form['address'],
         "city": request.form['city'],
@@ -72,7 +72,6 @@ def login():
 
 @app.route('/user/quick_options')
 def show_options():
-    print(session['id'])
     data = {
         "id": session['id']
         
@@ -89,23 +88,23 @@ def show_options():
     return render_template("/user/quick_options.html",favorite_order = my_fave, user=user)
 
 # old account page
-@app.route('/user/account')
-def update_account():
-    print(session['id'])
-    data = {
-        "id": session['id']
+# @app.route('/user/account')
+# def update_account():
+#     print(session['id'])
+#     data = {
+#         "id": session['id']
         
-    }
-    user = User.get_by_id(data)
+#     }
+#     user = User.get_by_id(data)
     
-    my_fave = []
-    if user.favorite_order != '':
-        data = {
-            "id":user.favorite_order
-        }
-    favorite_order = User.get_favorite_order(data)
-    my_fave.append(favorite_order)
-    return render_template("/user/account_info.html",favorite_order = my_fave)
+#     my_fave = []
+#     if user.favorite_order != '':
+#         data = {
+#             "id":user.favorite_order
+#         }
+#     favorite_order = User.get_favorite_order(data)
+#     my_fave.append(favorite_order)
+#     return render_template("/user/account_info.html",favorite_order = my_fave)
 
 @app.route('/user/order')
 def track_orders():
@@ -120,16 +119,16 @@ def close_sessions():
 @app.route('/user/update',methods=["POST"])
 def update_user():
     data = {
-        id : session['id'],
-        "fname": request.form["fname"],
-        "lname": request.form["lname"],
+        'id' : session['id'],
+        "firstname": request.form["firstname"],
+        "lastname": request.form["lastname"],
         "email": request.form['email'],
         "address": request.form['address'],
         "city": request.form['city'],
         "state": request.form['state'],
     }
-    user=User.update_user(data)
-    return redirect('/user/account/past_orders', user=user)
+    User.update_user(data)
+    return redirect('/user/account/past_orders')
 
 
 @app.route('/user/account/past_orders')
@@ -151,12 +150,9 @@ def account():
             'number_of_toppings' : order['number_of_toppings'],
             'updated_at' : order['updated_at']
         }
-        print(order)
         data['order_total'] = User.calcOrderTotal(data)
         user_orders.append(data)
-    print("LOOK AT ME", user.favorite_order)
-    print(user_orders)
-    return render_template("/user/info_and_past.html", orders=user_orders, user=user, all_states = states_JSON)
+    return render_template("/user/info_and_past.html", orders=user_orders, user=user, all_states=states_JSON)
 
 def validate_user( user ):
         is_valid = True

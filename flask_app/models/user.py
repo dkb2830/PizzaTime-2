@@ -30,19 +30,17 @@ class User:
     @classmethod
     def get_by_id(cls, data):
         query = "SELECT * FROM users WHERE id = %(id)s;"
-        results = connectToMySQL(cls.db).query_db( query, data)
-        
-        print(results[0])
+        results = connectToMySQL(cls.db).query_db( query, data )
         return cls(results[0])
 
     @classmethod
     def update_user(cls, data):
-        query = "UPDATE users SET firstname=%(firstname)s, lastname=%(lastname)s, email=%(email)s, address%(address)s, city=%(city)s, state=%(state)s WHERE id=%(id)s;"
-        return connectToMySQL(cls.db).query_db(query, data)
+        query = "UPDATE users SET firstname=%(firstname)s, lastname=%(lastname)s, email=%(email)s, address=%(address)s, city=%(city)s, state=%(state)s WHERE id=%(id)s;"
+        return connectToMySQL(cls.db).query_db( query, data )
         
     @classmethod
     def save(cls, data ):
-        query = "INSERT INTO users ( firstname , lastname , email, password, address, city, state) VALUES ( %(fname)s , %(lname)s , %(email)s, %(password)s, %(address)s, %(city)s, %(state)s);"
+        query = "INSERT INTO users ( firstname , lastname , email, password, address, city, state) VALUES ( %(firstname)s , %(lastname)s , %(email)s, %(password)s, %(address)s, %(city)s, %(state)s);"
         # data is a dictionary that will be passed into the save method from server.py
         return connectToMySQL(cls.db).query_db( query, data )
     

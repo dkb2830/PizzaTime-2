@@ -1,8 +1,8 @@
+import string
 from flask import Flask, render_template, request, redirect, session, flash# import the class from friend.py
 from flask_app.models.order import Order
 from flask_app.models.user import User
 from flask_app import app
-from werkzeug.datastructures import ImmutableMultiDict
 from datetime import *
 import random
 
@@ -67,8 +67,12 @@ def send_order_details():
     }
     data['order_total'] = calcOrderTotal(data)
     print(data)
-    session['user_session_orders'] = [data] + session['user_session_orders']
-    
+    print(session)
+    if session.get('user_session_orders') is None:
+        session['user_session_orders'] = [data]
+    else:
+        session['user_session_orders'] = [data] + session['user_session_orders']
+
     session['user_session_grand_total'] = calcGrandTotal(session['user_session_orders'])
     
     #print("Now Printing the session data: ",session['user_session_orders'])
